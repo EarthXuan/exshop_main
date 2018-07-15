@@ -2,6 +2,8 @@ server:
   port: 8088
 spring:
   profiles: dev
+  thymeleaf:
+    prefix: classpath:/templates/
   datasource:
     url: jdbc:mysql://localhost:3306/exshop
     username: root
