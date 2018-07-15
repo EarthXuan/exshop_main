@@ -1,0 +1,24 @@
+server:
+  port: 8088
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/exshop
+    username: root
+    password: 836569303qqw
+    driver-class-name: com.mysql.jdbc.Driver
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.example.exshop_main.entity
+
+#pagehelper分页插件
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+
+
