@@ -24,26 +24,44 @@ body{background:#fbe1d3 url("images/login_bg.jpg") center top no-repeat;}
 #Lg_Main .Login p input{width:300px; height:35px; border:1px solid #ddd; text-indent:10px; color:#ccc;}
 #Lg_Main .Login p input.tj{width:300px; height:45px; background:#ed145b; color:#fff; font-size:16px; border-radius:5px; text-align:center; line-height:45px; margin-top:20px; border:0px;}
   </style>
+     <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+     <script type="text/javascript" src="../plugins/alertPlugin/js/zdialog.js"></script>
+     <link type="text/css" rel="stylesheet" href="../plugins/alertPlugin/css/zdialog.css" />
  </head>
  <body>
 
 <div id="Lg_Main">
-	<div class="Login">
-
+    <form id="loginForm">
+        <div class="Login">
 		<h2><a href="register.html" >免费注册</a>登录 </h2>
-
 		<h3>账号</h3>
-		<p><input type="text" value="用户名/邮箱/已验证手机"/></p>
+		<p><input type="text" id="username" name="username" value=""/></p>
 		<h3>密码</h3>
-		<p><input type="password" value=""/></p>
+		<p><input type="password" id="password" name="password" value=""/></p>
 		<h3 class="ck"><input type="checkbox" id="ck" /><label for="ck">&nbsp;请保存我这次的登录信息</label></h3>
 
-		<p><input type="submit" class="tj" value="登  录"/></p>
+		<p><input type="button" onclick="login()" class="tj" value="登  录"/></p>
 		<h3><a href="" class="fl">忘记密码？</a><a href="" class="fr">邮箱找回密码?</a></h3>
-		
-		
 	</div>
+    </form>
+
 </div>
-  
+  <script type="text/javascript">
+        function login(){
+            $.ajax({
+                type: "POST",
+                url: "/user/login.do",
+                data: $('#loginForm').serializeArray(),
+                success: function(data){
+                    if(data.status==0){
+                        window.location.href="/layout/index.do";
+                    }else{
+                        $.DialogByZ.Alert({Title: "提示", Content: data.msg,BtnL:"确定",FunL:alerts});
+                        return false;
+                    }
+                }
+            });
+        }
+  </script>
  </body>
 </html>

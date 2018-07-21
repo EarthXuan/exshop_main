@@ -32,4 +32,6 @@ public interface UserMapper {
     int updatePasswordByUsername(@Param("username") String username,@Param("passwordNew") String passwordNew);
 
     int checkPassword(@Param("password") String password,@Param("userid") Integer userid);
+    /**校验手机号是否存在*/
+    User findByUserNameOrPhone(String phone);
 }

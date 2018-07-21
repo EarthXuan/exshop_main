@@ -11,4 +11,16 @@ public class LayoutController {
     public String index(){
         return "index";
     }
+    @RequestMapping("detail.do")
+    public String detail(){
+        return "goods";
+    }
+    @RequestMapping("login.do")
+    public String login(){
+        return "Login";
+    }
+    @RequestMapping("register.do")
+    public String register(){
+        return "register";
+    }
 }

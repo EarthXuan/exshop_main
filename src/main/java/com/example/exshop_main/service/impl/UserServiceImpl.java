@@ -176,4 +176,9 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createBySuccess(user);
     }
 
+    @Override
+    public User findByUserNameOrPhone(String phone) {
+        return userMapper.findByUserNameOrPhone(phone);
+    }
+
 }

@@ -170,6 +170,13 @@
     where username=#{username}
   </select>
 
+  <select id="findByUserNameOrPhone" resultMap="BaseResultMap" parameterType="string">
+    select
+    <include refid="Base_Column_List" />
+    from shop_user
+    where username=#{phone} or phone=#{phone}
+  </select>
+
   <select id="selectQuestionByUsername" resultType="string" parameterType="string">
     select
     question

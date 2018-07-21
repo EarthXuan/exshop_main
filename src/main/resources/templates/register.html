@@ -6,10 +6,13 @@
   <meta name="Author" content="">
   <meta name="Keywords" content="">
   <meta name="Description" content="">
+	 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+	 <script type="text/javascript" src="../plugins/alertPlugin/js/zdialog.js"></script>
+	 <link type="text/css" rel="stylesheet" href="../plugins/alertPlugin/css/zdialog.css" />
   <title>用户登录页面_潭州礼品</title>
   <style type="text/css">
 *{margin:0px;}
-body{background:#fbe1d3 url("images/login_bg.jpg") center top no-repeat;}
+body{background:#fbe1d3 url("../images/login_bg.jpg") center top no-repeat;}
 .Lg_Main{width:1000px;  margin:100px auto; }
 .Lg_Main .Login{width:325px;  background:#fff; border-radius:10px;								box-shadow:0px 0px 5px #666; float:right; padding:20px 50px;}
 .Lg_Main .Login h2{line-height:45px;font-size:26px; font-family:"微软雅黑"; font-weight:100; padding-bottom:20px;}
@@ -26,28 +29,63 @@ body{background:#fbe1d3 url("images/login_bg.jpg") center top no-repeat;}
   </style>
  </head>
  <body>
-
+ <form id="registerForm" >
 <div class="Lg_Main">
 	<div class="Login">
-
 		<h2><a href="Login.html" >登录</a>注册</h2>
-
-		<h3>用户名</h3>
-		<p><input type="text" value="用户名/邮箱/已验证手机"/></p>
-		<h3>Email</h3>
-		<p><input type="password" value=""/></p>
+		<h3>手机号</h3>
+		<p><input id="phone" name="phone" type="text" value="" style="color: #0a0202"/></p>
 		<h3>密码</h3>
-		<p><input type="password" value=""/></p>
-		<p>密码强弱</p>
-		<h3>确认密码</h3>
-		<p><input type="password" value=""/></p>
-
-		<p><input type="submit" class="tj" value="同意协议并注册"/></p>
+		<p><input id="password" name="password" type="password" value="" style="color: #0a0202"/></p>
+			<h3>确认密码</h3>
+		<p><input id="confirmPassword" name="confirmPassword" type="password" value="" style="color: #0a0202"/></p>
+		<p><input type="button" onclick="register()" class="tj" value="同意协议并注册" style="line-height:0px;"/></p>
 		<h3><a href="" class="fl">我已有账号，我要登录</a><a href="" class="fr">您忘记密码了吗？</a></h3>
-		
-		
 	</div>
 </div>
-  
+ </form>
+ <script type="text/javascript">
+	 function register(){
+		var phone=$("#phone").val();
+		var password=$("#password").val();
+		var confirmPassword=$("#confirmPassword").val();
+
+         if(phone.trim()==''){
+             $.DialogByZ.Alert({Title: "提示", Content: "手机号不能为空",BtnL:"确定",FunL:alerts});
+             return false;
+         }
+         if(password.trim()==''){
+             $.DialogByZ.Alert({Title: "提示", Content: "密码不能为空",BtnL:"确定",FunL:alerts});
+             return false;
+         }
+         if(confirmPassword.trim()==''){
+             $.DialogByZ.Alert({Title: "提示", Content: "确认密码不能为空",BtnL:"确定",FunL:alerts});
+             return false;
+         }
+         $.ajax({
+             type: "POST",
+             url: "/user/register.do",
+             data: $('#registerForm').serializeArray(),
+             success: function(data){
+                 debugger;
+                    if(data.status==0){
+                        window.location.href="/layout/login.do";
+                    }else{
+                        $.DialogByZ.Alert({Title: "提示", Content: data.msg,BtnL:"确定",FunL:alerts});
+                        return false;
+                    }
+             }
+         });
+	 }
+     function alerts(){
+
+         $.DialogByZ.Close();
+     }
+     // 验证手机号
+     function isPhoneNo(phone) {
+         var pattern = /^1[34578]\d{9}$/;
+         return pattern.test(phone);
+     }
+ </script>
  </body>
 </html>
